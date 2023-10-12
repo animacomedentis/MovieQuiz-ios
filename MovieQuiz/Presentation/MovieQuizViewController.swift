@@ -9,6 +9,10 @@ final class MovieQuizViewController: UIViewController {
     @IBOutlet private var imageView: UIImageView!
     @IBOutlet private var textLabel: UILabel!
     @IBOutlet private var counterLabel: UILabel!
+    
+    @IBOutlet weak var noButton: UIButton!
+    @IBOutlet weak var yesButton: UIButton!
+    
     // MARK: - IB Acction
     @IBAction func yesButtonClicked(_ sender: Any) {
         let currentQuestion = questions[currentQuestionIndex]
@@ -22,6 +26,7 @@ final class MovieQuizViewController: UIViewController {
         
         showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
     }
+    
     // MARK: - Public Properties
     struct QuizStepViewModel {
         let image: UIImage
@@ -95,6 +100,11 @@ final class MovieQuizViewController: UIViewController {
         return questionStep
     }
     private func show(quiz step: QuizStepViewModel) {
+        //the button is enabled
+        noButton.isEnabled = true
+        yesButton.isEnabled = true
+        
+        
         imageView.image = step.image
         textLabel.text = step.question
         counterLabel.text = step.questionNumber
@@ -112,6 +122,9 @@ final class MovieQuizViewController: UIViewController {
         imageView.layer.borderWidth = 8
         imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
         
+        // the button is off
+        noButton.isEnabled = false
+        yesButton.isEnabled = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.showNextQuestionOrResults()
         }
