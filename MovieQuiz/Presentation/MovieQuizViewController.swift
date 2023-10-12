@@ -1,7 +1,28 @@
 import UIKit
 
 final class MovieQuizViewController: UIViewController {
+
     
+   
+    
+    // MARK: - IB Outlet
+    @IBOutlet private var imageView: UIImageView!
+    @IBOutlet private var textLabel: UILabel!
+    @IBOutlet private var counterLabel: UILabel!
+    // MARK: - IB Acction
+    @IBAction func yesButtonClicked(_ sender: Any) {
+        let currentQuestion = questions[currentQuestionIndex]
+        let givenAnswer = true
+        
+        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+    }
+    @IBAction func noButtonClicked(_ sender: Any) {
+        let currentQuestion = questions[currentQuestionIndex]
+        let givenAnswer = false
+        
+        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+    }
+    // MARK: - Public Properties
     struct QuizStepViewModel {
         let image: UIImage
         let question: String
@@ -18,7 +39,7 @@ final class MovieQuizViewController: UIViewController {
         let text: String
         let buttonText: String
     }
-    
+    // MARK: - Private Properties
     private let questions: [QuizQuestion] = [
         QuizQuestion(
             image: "The Godfather",
@@ -61,27 +82,11 @@ final class MovieQuizViewController: UIViewController {
             text: "Рейтинг этого фильма больше чем 6?",
             correctAnswer: false)
     ]
+    
     private var currentQuestionIndex = 0
     private var correctAnswers = 0
     
-    
-    @IBOutlet private var imageView: UIImageView!
-    @IBOutlet private var textLabel: UILabel!
-    @IBOutlet private var counterLabel: UILabel!
-    // MARK: - Public
-    @IBAction func yesButtonClicked(_ sender: Any) {
-        let currentQuestion = questions[currentQuestionIndex]
-        let givenAnswer = true
-        
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
-    }
-    @IBAction func noButtonClicked(_ sender: Any) {
-        let currentQuestion = questions[currentQuestionIndex]
-        let givenAnswer = false
-        
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
-    }
-    // MARK: - Private
+    // MARK: - Private Methods
     private func convert(model: QuizQuestion) -> QuizStepViewModel{
         let questionStep = QuizStepViewModel(
             image: UIImage(named: model.image) ?? UIImage(), // 2
