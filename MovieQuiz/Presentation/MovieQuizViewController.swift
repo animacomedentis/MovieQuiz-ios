@@ -3,22 +3,22 @@ import UIKit
 final class MovieQuizViewController: UIViewController {
     
     // MARK: - IB Outlet
-    @IBOutlet private weak var imageView    : UIImageView!
-    @IBOutlet private weak var textLabel    : UILabel!
-    @IBOutlet private weak var counterLabel : UILabel!
+    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var textLabel: UILabel!
+    @IBOutlet private weak var counterLabel: UILabel!
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet private weak var noButton        : UIButton!
-    @IBOutlet private weak var yesButton       : UIButton!
+    @IBOutlet private weak var noButton: UIButton!
+    @IBOutlet private weak var yesButton: UIButton!
     
     // MARK: - Private Properties
-    private var questionsCount       = 10
+    private var questionsCount = 10
     private var currentQuestionIndex = 0
-    private var correctAnswers       = 0
+    private var correctAnswers = 0
     
-    private var currentQuestion : QuizQuestion?
-    private var questionFactory : QuestionFactory?
-    private var alertPresenter  : AlertPresenter?
-    private var statisticSevice : StatisticService?
+    private var currentQuestion: QuizQuestion?
+    private var questionFactory: QuestionFactory?
+    private var alertPresenter: AlertPresenter?
+    private var statisticSevice: StatisticService?
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -26,7 +26,7 @@ final class MovieQuizViewController: UIViewController {
         imageView.layer.cornerRadius = 20
         
         questionFactory = QuestionFactory(moviesLoader:MoviesLoader(),delegate : self)
-        alertPresenter  = AlertPresenterImpl(viewController : self)
+        alertPresenter = AlertPresenterImpl(viewController : self)
         statisticSevice = StatisticServiceImpl()
         
         showLoadingIndicator()
