@@ -10,7 +10,6 @@ final class MovieQuizViewController: UIViewController {
     @IBOutlet private weak var noButton        : UIButton!
     @IBOutlet private weak var yesButton       : UIButton!
     
-    
     // MARK: - Private Properties
     private var questionsCount       = 10
     private var currentQuestionIndex = 0
@@ -26,12 +25,9 @@ final class MovieQuizViewController: UIViewController {
         super.viewDidLoad()
         imageView.layer.cornerRadius = 20
         
-        
         questionFactory = QuestionFactory(moviesLoader:MoviesLoader(),delegate : self)
         alertPresenter  = AlertPresenterImpl(viewController : self)
         statisticSevice = StatisticServiceImpl()
-        
-        
         
         showLoadingIndicator()
         questionFactory?.loadData()
@@ -49,15 +45,13 @@ final class MovieQuizViewController: UIViewController {
         showAnswerResult(isCorrect: givenAnswer == currentQuestion?.correctAnswer)
     }
     
-    
-    
     // MARK: - Private Methods
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
         return QuizStepViewModel(
             image: UIImage(data: model.image) ?? UIImage(),
             question: model.text,
             questionNumber: "\(currentQuestionIndex + 1)/\(questionsCount)")
-    }  //
+    }
     
     private func show(quiz step: QuizStepViewModel) {
         //the button is enabled
@@ -67,14 +61,14 @@ final class MovieQuizViewController: UIViewController {
         textLabel.text      = step.question
         counterLabel.text   = step.questionNumber
         imageView.layer.borderColor = UIColor.ypBlack.cgColor
-    }//
+    }
     
     private func showQuestion(){
         
         questionFactory?.requestNextQuestion()
         imageView.layer.borderColor = UIColor.ypBlack.cgColor
         
-    }//
+    }
     
     private func showAnswerResult(isCorrect: Bool) {
         if isCorrect {
@@ -90,7 +84,7 @@ final class MovieQuizViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.showNextQuestionOrResults()
         }
-    }//
+    }
     
     private func showNextQuestionOrResults() {
         if currentQuestionIndex == questionsCount - 1 {
@@ -99,7 +93,7 @@ final class MovieQuizViewController: UIViewController {
             currentQuestionIndex += 1
             questionFactory?.requestNextQuestion()
         }
-    }//
+    }
     
     private func showFinalResults() {
         statisticSevice?.store(correct: correctAnswers, total: questionsCount )
@@ -116,7 +110,7 @@ final class MovieQuizViewController: UIViewController {
         )
         
         alertPresenter?.show(alertModel: alertModel)
-    }//
+    }
     
     private func makeResultMessage() -> String{
         
@@ -133,14 +127,15 @@ final class MovieQuizViewController: UIViewController {
             Средняя точность: \(String(format: "%.2f", statisticSevice.totalAccuracy))%
         """
         return resultMessge
-    }//
+    }
     
     //MARK: Error indicator
     //функция показа индикатора загрузки
     private func showLoadingIndicator(){
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
-    }//
+    }
+    
     //функция показа индикатора загрузки
     private func hideLoadingIndicator(){
         activityIndicator.isHidden = true
@@ -164,25 +159,25 @@ final class MovieQuizViewController: UIViewController {
             })
         
         alertPresenter?.show(alertModel: alertModel)
-    }//
+    }
     
 }//ViewController
 
 
 extension MovieQuizViewController: QuestionFactoryDelegate {
+    
     func didLoadDataFromServer(){
         activityIndicator.isHidden = true
         questionFactory?.requestNextQuestion()
-    }//
+    }
     
     func didReceiveQuestion(_ question: QuizQuestion) {
         self.currentQuestion = question
         let viewModel        = self.convert(model : question)
         self.show(quiz: viewModel)
-    }//
+    }
     
     func didFailToLoadData(with error: Error){
         showNetworkError(message: "Пришла ошибка от сервера")
-    }//
-    
-}
+    }
+}//MovieQuizViewController

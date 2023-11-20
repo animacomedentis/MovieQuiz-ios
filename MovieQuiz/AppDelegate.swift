@@ -10,7 +10,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     // MARK: UISceneSession Lifecycle
-
     func application(
         _ application: UIApplication,
         configurationForConnecting connectingSceneSession: UISceneSession,
@@ -22,5 +21,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(
         _ application: UIApplication,
         didDiscardSceneSessions sceneSessions: Set<UISceneSession>
-    ) {}
+    ) {
+        
+    }
 }

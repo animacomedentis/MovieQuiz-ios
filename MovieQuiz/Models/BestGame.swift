@@ -8,9 +8,9 @@
 import Foundation
 
 struct BestGame: Codable {
-    let correct : Int
-    let total   : Int
-    let date    : Date
+    let correct: Int
+    let total: Int
+    let date: Date
 }
 
 extension BestGame: Comparable{

@@ -12,6 +12,7 @@ protocol QuestionFactoryDelegate: AnyObject {
     func didLoadDataFromServer() // сообщение об успешной загрузке
     func didFailToLoadData(with error: Error) // сообщение об ошибке загрузки
 }
+
 protocol QuestionFactoryProtocol {
     func requestNextQuestion()
 }
@@ -62,12 +63,10 @@ final class QuestionFactory: QuestionFactoryProtocol {
             let roundedRandomRaiting = round(randomRaiting * 10) / 10.0 // округляю до одного знака 
             let text = "Рейтинг этого фильма больше чем \(roundedRandomRaiting)?"
             let correctAnswer = rating > Float(roundedRandomRaiting)
-            
             let question = QuizQuestion(image: imageData,
                                          text: text,
                                          correctAnswer: correctAnswer)
            
-            
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 self.delegate?.didReceiveQuestion(question)
@@ -76,7 +75,6 @@ final class QuestionFactory: QuestionFactoryProtocol {
     }
     
 }
-
 
 //private let questions: [QuizQuestion] = [
 //    QuizQuestion(

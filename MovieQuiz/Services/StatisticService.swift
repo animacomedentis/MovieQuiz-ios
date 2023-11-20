@@ -8,9 +8,9 @@
 import Foundation
 
 protocol StatisticService{
-    var totalAccuracy : Double { get }
-    var gamesCount    : Int { get }
-    var bestGame      : BestGame? { get }
+    var totalAccuracy: Double { get }
+    var gamesCount: Int { get }
+    var bestGame: BestGame? { get }
     
     func store(correct: Int, total: Int)
 }
@@ -21,20 +21,20 @@ final class StatisticServiceImpl {
         case total, correct, bestGame, gamesCount
     }
     
-    private let userDefaults : UserDefaults
-    private let decoder      : JSONDecoder
-    private let encoder      : JSONEncoder
-    private let dateProvider : () -> Date
+    private let userDefaults: UserDefaults
+    private let decoder: JSONDecoder
+    private let encoder: JSONEncoder
+    private let dateProvider: () -> Date
     
     // MARK: -init
-    init(userDefaults : UserDefaults         = .standard,
-         decoder      : JSONDecoder          = JSONDecoder(),
-         encoder      : JSONEncoder          = JSONEncoder(),
-         dateProvider : @escaping () -> Date = { Date() }
+    init(userDefaults: UserDefaults = .standard,
+         decoder: JSONDecoder = JSONDecoder(),
+         encoder: JSONEncoder = JSONEncoder(),
+         dateProvider: @escaping () -> Date = { Date() }
     ){
         self.userDefaults = userDefaults
-        self.decoder      = decoder
-        self.encoder      = encoder
+        self.decoder = decoder
+        self.encoder = encoder
         self.dateProvider = dateProvider
     }
 }
@@ -71,8 +71,8 @@ extension StatisticServiceImpl: StatisticService {
     var bestGame: BestGame? {
         get {
             guard
-                let data     = userDefaults.data(forKey                    : Keys.bestGame.rawValue),
-                let bestGame = try? decoder.decode(BestGame.self, from : data) else{
+                let data = userDefaults.data(forKey: Keys.bestGame.rawValue),
+                let bestGame = try? decoder.decode(BestGame.self, from: data) else{
                 return nil
             }
             return bestGame
@@ -87,15 +87,13 @@ extension StatisticServiceImpl: StatisticService {
         Double(correct) / Double(total) * 100
     }
     
-    
-    
     func store(correct: Int, total: Int) {
-        self.correct    += correct
-        self.total      += total
+        self.correct += correct
+        self.total += total
         self.gamesCount += 1
         
-        let date            = dateProvider()
-        let currentBestGame = BestGame(correct : correct, total : total, date : date)
+        let date = dateProvider()
+        let currentBestGame = BestGame(correct: correct, total: total, date: date)
         
         if let previousBestGame = bestGame{
             if currentBestGame > previousBestGame{
@@ -107,5 +105,3 @@ extension StatisticServiceImpl: StatisticService {
         
     }
 }
-
-
