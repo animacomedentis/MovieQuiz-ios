@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol AlertPresenter{
-    func show(alertModel: AlertModel)
+    func show(alertModel: AlertModel )
 }
 
 final class AlertPresenterImpl{
@@ -30,8 +30,8 @@ extension AlertPresenterImpl: AlertPresenter {
         let action = UIAlertAction(title: alertModel.buttonText, style: .default) { _ in
             alertModel.buttonAction()
         }
-        
-        alert.addAction(action)        
+        alert.view.accessibilityIdentifier = "Alert"
+        alert.addAction(action)
         viewController?.present(alert, animated: true)
     }
 }

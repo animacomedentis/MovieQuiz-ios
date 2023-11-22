@@ -96,20 +96,22 @@ final class MovieQuizViewController: UIViewController {
     }
     
     private func showFinalResults() {
-        statisticSevice?.store(correct: correctAnswers, total: questionsCount )
+        statisticSevice?.store(correct: correctAnswers,
+                               total: questionsCount )
         
         let alertModel = AlertModel(
-            title        : "Этот раунд окончен!",
-            message      : makeResultMessage(),
-            buttonText   : "Сыграть еще раз",
-            buttonAction : {[weak self] in
+            title: "Этот раунд окончен!",
+            message: makeResultMessage(),
+            buttonText: "Сыграть еще раз",
+            buttonAction: {[weak self] in
                 self?.currentQuestionIndex = 0
-                self?.correctAnswers       = 0
+                self?.correctAnswers = 0
                 self?.questionFactory?.requestNextQuestion()
             }
+            
         )
-        
         alertPresenter?.show(alertModel: alertModel)
+        
     }
     
     private func makeResultMessage() -> String{
@@ -147,13 +149,13 @@ final class MovieQuizViewController: UIViewController {
         hideLoadingIndicator()
         
         let alertModel = AlertModel(
-            title      : "Что-то пошло не так(",
-            message    : "Невозможно загрузить данные",
+            title: "Что-то пошло не так(",
+            message: "Невозможно загрузить данные",
             buttonText : "Попробовать ещё раз",
             buttonAction: { [weak self]  in
                 guard let self = self else{return}
                 self.currentQuestionIndex = 0
-                self.correctAnswers       = 0
+                self.correctAnswers = 0
                 
                 self.questionFactory?.requestNextQuestion()
             })
