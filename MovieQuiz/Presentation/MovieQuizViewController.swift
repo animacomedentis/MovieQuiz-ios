@@ -23,6 +23,7 @@ final class MovieQuizViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.layer.cornerRadius = 20
+        presenter.viewController = self
         
         questionFactory = QuestionFactory(moviesLoader:MoviesLoader(),delegate : self)
         alertPresenter = AlertPresenterImpl(viewController : self)
@@ -32,16 +33,14 @@ final class MovieQuizViewController: UIViewController {
         questionFactory?.loadData()
     }
     
-    // MARK: - IB Acction
+     //MARK: - IB Acction
     @IBAction private func yesButtonClicked(_ sender : Any) {
-        let givenAnswer = true
-        
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion?.correctAnswer)
+        presenter.currentQuestion = currentQuestion
+        presenter.yesButtonClicked()
     }
     @IBAction private func noButtonClicked(_ sender: Any) {
-        let givenAnswer = false
-        
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion?.correctAnswer)
+        presenter.currentQuestion = currentQuestion
+        presenter.noButtonClicked()
     }
     
     // MARK: - Private Methods
@@ -62,7 +61,7 @@ final class MovieQuizViewController: UIViewController {
         
     }
     
-    private func showAnswerResult(isCorrect: Bool) {
+    func showAnswerResult(isCorrect: Bool) {
         if isCorrect {
             correctAnswers += 1
         }
