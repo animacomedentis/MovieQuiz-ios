@@ -8,16 +8,17 @@
 import Foundation
 
 protocol QuestionFactoryDelegate: AnyObject {
-    func didReceiveQuestion (_ question: QuizQuestion)
+    func didRecieveNextQuestion (_ question: QuizQuestion?)
     func didLoadDataFromServer() // сообщение об успешной загрузке
     func didFailToLoadData(with error: Error) // сообщение об ошибке загрузки
 }
 
 protocol QuestionFactoryProtocol {
     func requestNextQuestion()
+    func loadData()
 }
 
-final class QuestionFactory: QuestionFactoryProtocol {
+    final class QuestionFactory: QuestionFactoryProtocol {
     // MARK: - Proreties
     private let moviesLoader: MoviesLoading
     private weak var delegate: QuestionFactoryDelegate?
@@ -69,7 +70,7 @@ final class QuestionFactory: QuestionFactoryProtocol {
            
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                self.delegate?.didReceiveQuestion(question)
+                self.delegate?.didRecieveNextQuestion(question)
             }
         }
     }
