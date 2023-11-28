@@ -63,11 +63,11 @@ final class MovieQuizUITests: XCTestCase {
     }
     
     func testFinishAllert() {
-        sleep(1)
+        sleep(2)
         
         for _ in 1...10 {
             app.buttons["No"].tap()
-            sleep(1)
+            sleep(2)
         }
         
         let alert = app.alerts["Alert"]
@@ -77,16 +77,16 @@ final class MovieQuizUITests: XCTestCase {
     }
     
     func testAlertDismiss() {
-        sleep(1)
+        sleep(2)
         for _ in 1...10 {
             app.buttons["No"].tap()
-            sleep(1)
+            sleep(2)
         }
         
         let alert = app.alerts["Alert"]
         alert.buttons.firstMatch.tap()
         
-        sleep(1)
+        sleep(2)
         
         let indexLabel = app.staticTexts["Index"]
         
