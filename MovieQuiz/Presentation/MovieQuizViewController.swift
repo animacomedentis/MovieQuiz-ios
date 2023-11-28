@@ -1,6 +1,6 @@
 import UIKit
 
-final class MovieQuizViewController: UIViewController {
+final class MovieQuizViewController: UIViewController, MovieQuizViewControllerProtocol {
     
     // MARK: - IB Outlet
     @IBOutlet private weak var imageView: UIImageView!
@@ -62,7 +62,7 @@ final class MovieQuizViewController: UIViewController {
         }
         
         alert.addAction(action)
-        
+        alert.view.accessibilityIdentifier = "Alert"
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -99,4 +99,6 @@ final class MovieQuizViewController: UIViewController {
         alert.addAction(action)
     }
     
+    
 }//MovieQuizViewController
+

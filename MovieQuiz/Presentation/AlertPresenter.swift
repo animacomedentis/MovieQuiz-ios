@@ -30,8 +30,9 @@ extension AlertPresenterImpl: AlertPresenter {
         let action = UIAlertAction(title: alertModel.buttonText, style: .default) { _ in
             alertModel.buttonAction()
         }
-        alert.view.accessibilityIdentifier = "Alert"
+        
         alert.addAction(action)
         viewController?.present(alert, animated: true)
+        
     }
 }
